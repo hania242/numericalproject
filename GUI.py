@@ -1,34 +1,45 @@
 import streamlit as st
 from muller import muller
 
-# Custom CSS for Blue-Themed App
+# Custom CSS with more specific selectors
 st.markdown(
     """
     <style>
     /* Style headers */
-    h1 {
-        color: #00A1FF;  /* Primary blue */
+    h1, .stMarkdown h1 {
+        color: #00A1FF;  /* Primary blue for main headers */
     }
-    h2, h3 {
-        color: #1E90FF; /* Slightly lighter blue */
+    h2, .stMarkdown h2 {
+        color: #1E90FF; /* Slightly lighter blue for subheaders */
+    }
+    h3, .stMarkdown h3 {
+        color: #4682B4; /* Steel blue for smaller headers */
     }
 
-    /* Style buttons */
-    .stButton button {
+    /* Style buttons with more specific selectors */
+    div.stButton > button {
         background-color: #00A1FF;  /* Primary blue */
         color: white;
-        border-radius: 5px;
+        border-radius: 8px;
         font-size: 16px;
+        font-weight: bold;
         border: none;
-    }
-    .stButton button:hover {
-        background-color: #007ACC; /* Darker blue on hover */
         transition: 0.3s;
     }
+    div.stButton > button:hover {
+        background-color: #007ACC; /* Darker blue on hover */
+    }
 
-    /* Style other interactive elements (optional) */
-    .stTextInput > div > input {
+    /* Style text input fields */
+    input[type="text"], input[type="number"] {
         border: 2px solid #00A1FF;
+        border-radius: 5px;
+        padding: 8px;
+        font-size: 14px;
+    }
+    input[type="text"]:focus, input[type="number"]:focus {
+        outline: none;
+        border: 2px solid #007ACC; /* Darker blue on focus */
     }
     </style>
     """,

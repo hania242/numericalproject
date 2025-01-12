@@ -1,46 +1,45 @@
 import streamlit as st
 from muller import muller
-
-# Inject Custom CSS
 def inject_custom_css():
     st.markdown(
         """
         <style>
-        /* Style headers */
-        h1, .stMarkdown h1 {
-            color: #00A1FF!important;  /* Primary blue for main headers */
-        }
-        h2, .stMarkdown h2 {
-            color: #1E90FF; /* Slightly lighter blue for subheaders */
-        }
-        h3, .stMarkdown h3 {
-            color: #4682B4; /* Steel blue for smaller headers */
+        /* Style headers within markdown */
+        .stMarkdown h1, .stMarkdown h2 {
+            color: #00A1FF !important; /* Primary blue for headers in markdown */
         }
 
         /* Style buttons */
         div.stButton > button {
-            background-color: #00A1FF;  /* Primary blue */
-            color: white;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
-            border: none;
-            transition: 0.3s;
+            background-color: #00A1FF !important;  /* Primary blue */
+            color: white !important;
+            border-radius: 8px !important;
+            font-size: 16px !important;
+            font-weight: bold !important;
+            border: none !important;
+            transition: 0.3s !important;
         }
         div.stButton > button:hover {
-            background-color: #007ACC; /* Darker blue on hover */
+            background-color: #007ACC !important; /* Darker blue on hover */
         }
 
-        /* Style text input fields */
-        input[type="text"], input[type="number"] {
-            border: 2px solid #00A1FF;
-            border-radius: 5px;
-            padding: 8px;
-            font-size: 14px;
+        /* Style input fields */
+        input[type="text"], input[type="number"], textarea {
+            border: 2px solid #00A1FF !important;
+            border-radius: 5px !important;
+            padding: 8px !important;
+            font-size: 14px !important;
         }
-        input[type="text"]:focus, input[type="number"]:focus {
-            outline: none;
-            border: 2px solid #007ACC; /* Darker blue on focus */
+        input[type="text"]:focus, input[type="number"]:focus, textarea:focus {
+            outline: none !important;
+            border: 2px solid #007ACC !important; /* Darker blue on focus */
+        }
+
+        /* Adjust block container for visual improvement */
+        .block-container {
+            background-color: #F5F5F5 !important;
+            padding: 20px !important;
+            border-radius: 10px !important;
         }
         </style>
         """,

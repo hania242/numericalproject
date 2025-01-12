@@ -30,10 +30,10 @@ def main():
             "Muller's Method",
             "Cramer's Rule",
             "LU Decomposition",
-            "Quadratic Interpolation",
-            "Golden Section Rule",
-            "Gauss-Seidel Method",
-            "Secant Method",
+            #"Quadratic Interpolation",
+            #"Golden Section Rule",
+            #"Gauss-Seidel Method",
+            #"Secant Method",
         ]
     )
 
@@ -44,14 +44,14 @@ def main():
         cramers_app()  # Call the cramers_app function
     elif menu == "LU Decomposition":
         lu_app()  # Call the lu_app function
-    elif menu == "Quadratic Interpolation":
-        quadratic_interpolation_app()  # Call the quadratic_interpolation_app function
-    elif menu == "Golden Section Rule":
-        golden_section_app()  # Call the golden_section_app function
-    elif menu == "Gauss-Seidel Method":
-        gauss_seidel_app()  # Call the gauss_seidel_app function
-    elif menu == "Secant Method":
-        secant_method_app()  # Call the secant_method_app function
+   # elif menu == "Quadratic Interpolation":
+        #quadratic_interpolation_app()  # Call the quadratic_interpolation_app function
+    #elif menu == "Golden Section Rule":
+        #golden_section_app()  # Call the golden_section_app function
+    #elif menu == "Gauss-Seidel Method":
+        #gauss_seidel_app()  # Call the gauss_seidel_app function
+    #elif menu == "Secant Method":
+        #secant_method_app()  # Call the secant_method_app function
 
 if __name__ == "__main__":
     main()

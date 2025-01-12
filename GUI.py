@@ -1,6 +1,40 @@
 import streamlit as st
 from muller import muller
 
+# Custom CSS for Blue-Themed App
+st.markdown(
+    """
+    <style>
+    /* Style headers */
+    h1 {
+        color: #00A1FF;  /* Primary blue */
+    }
+    h2, h3 {
+        color: #1E90FF; /* Slightly lighter blue */
+    }
+
+    /* Style buttons */
+    .stButton button {
+        background-color: #00A1FF;  /* Primary blue */
+        color: white;
+        border-radius: 5px;
+        font-size: 16px;
+        border: none;
+    }
+    .stButton button:hover {
+        background-color: #007ACC; /* Darker blue on hover */
+        transition: 0.3s;
+    }
+
+    /* Style other interactive elements (optional) */
+    .stTextInput > div > input {
+        border: 2px solid #00A1FF;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 # Streamlit App
 def muller_app():
     st.title("Numerical Methods Solver: Muller Method (Step-by-Step)")
@@ -47,4 +81,4 @@ def muller_app():
             st.error(f"Error: {e}")
 
 if __name__ == "__main__":
-    main()
+    muller_app()

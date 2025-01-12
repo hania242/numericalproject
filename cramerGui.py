@@ -19,7 +19,7 @@ def cramers_app():
     raw_rows = []
     for i in range(size):
         row = st.text_input(
-            f"Row {i + 1} (use format a+bi for complex numbers):",
+            f"Row {i + 1} (use format a or a+bi for numbers):",
             placeholder="Example: 2 3+2i 4-5i"
         ).strip()
         raw_rows.append(row)
@@ -27,7 +27,7 @@ def cramers_app():
     # Input constants vector
     st.write("Enter the constants vector (b):")
     b_input = st.text_input(
-        "b (use format a+bi for complex numbers):",
+        "b (use format a or a+bi for numbers):",
         placeholder="Example: 2 3+2i"
     ).strip()
 
@@ -38,7 +38,10 @@ def cramers_app():
         for i, row in enumerate(raw_rows):
             if row:  # Only process if row is not empty
                 try:
-                    A.append([complex(x.strip().replace("i", "j")) for x in row.split()])
+                    A.append([
+                        complex(x.strip().replace("i", "j")) if "i" in x else float(x.strip())
+                        for x in row.split()
+                    ])
                 except ValueError:
                     st.error(f"Row {i + 1} contains invalid numbers. Please use the correct format.")
                     rows_valid = False
@@ -47,15 +50,25 @@ def cramers_app():
                 rows_valid = False
 
         if rows_valid:
-            A = np.array(A, dtype=complex)
+            try:
+                A = np.array(A, dtype=complex)
+            except ValueError as e:
+                st.error(f"Matrix A input error: {e}")
+                rows_valid = False
 
         # Process vector b
+        b_valid = True
         if b_input:  # Only process if the input is not empty
             try:
-                b = np.array([complex(x.strip().replace("i", "j")) for x in b_input.split()], dtype=complex)
-                b_valid = True
-            except ValueError:
-                st.error("Constants vector (b) contains invalid numbers. Please use the correct format.")
+                b = np.array([
+                    complex(x.strip().replace("i", "j")) if "i" in x else float(x.strip())
+                    for x in b_input.split()
+                ], dtype=complex)
+                if len(b) != size:
+                    st.error(f"Vector b must have exactly {size} values.")
+                    b_valid = False
+            except ValueError as e:
+                st.error(f"Constants vector (b) contains invalid numbers. Error: {e}")
                 b_valid = False
         else:
             st.error("Constants vector (b) cannot be empty.")
@@ -66,7 +79,7 @@ def cramers_app():
             try:
                 # Solve using Cramer's Rule
                 result = cramers(A, b)
-                
+
                 if "error" in result:
                     st.error(result["error"])
                 else:
@@ -85,7 +98,7 @@ def cramers_app():
                         st.write(f"Det(A_{matrix_info['column_replaced']}) = {matrix_info['det_Ai']}")
 
             except Exception as e:
-                st.error("An unexpected error occurred. Please check your inputs.")
+                st.error(f"An unexpected error occurred in computation: {e}")
 
 if __name__ == "__main__":
     cramers_app()

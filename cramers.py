@@ -11,15 +11,21 @@ def format_number(value):
     Returns:
     str: Formatted number as a string.
     """
-    if np.iscomplex(value):  # Check if the number is complex
-        # If complex, display the real and imaginary parts with 'i' for imaginary
-        if np.isclose(value.imag, 0):  # If imaginary part is close to zero, treat as real
-            return f"{value.real:.3f}" if not value.real.is_integer() else f"{int(value.real)}"
-        else:
-            return f"{value.real:.3f}{value.imag:+.3f}i" if not value.imag.is_integer() else f"{value.real}{value.imag:+.0f}i"
+    if isinstance(value, complex):  # Check if the number is complex
+        # If the imaginary part is effectively zero, display as a real number
+        if np.isclose(value.imag, 0):
+            return f"{value.real:.3f}".rstrip('0').rstrip('.')  # Remove trailing zeros if real
+        # Otherwise, display as a complex number
+        real_part = f"{value.real:.3f}".rstrip('0').rstrip('.')
+        imag_part = f"{value.imag:+.3f}".rstrip('0').rstrip('.')
+        return f"{real_part}{imag_part}i"
     else:
-        # If real, add decimal only if needed (i.e., avoid decimals for integers)
-        return f"{value:.3f}" if not value.is_integer() else f"{int(value)}"
+        # For purely real numbers, ensure trailing zeros are stripped
+        return f"{value:.3f}".rstrip('0').rstrip('.')
+
+
+
+
 
 def format_matrix(matrix):
     """
@@ -48,12 +54,12 @@ def cramers(A, b):
         # Validate input dimensions
         n = A.shape[0]
         if A.shape[1] != n or len(b) != n:
-            raise ValueError("Matrix A must be square and match the size of vector b.")
+            return {"error": "Matrix A must be square and match the size of vector b."}
 
         # Compute determinant of A
         det_A = np.linalg.det(A)
         if np.isclose(det_A, 0):
-            raise ValueError("The determinant of A is zero. The system has no unique solution.")
+            return {"error": "The determinant of A is zero or very close to zero. The system has no unique solution."}
 
         solutions = {}
         steps = {"det_A": format_number(det_A), "matrices": []}
@@ -79,23 +85,8 @@ def cramers(A, b):
 
     except ValueError as e:
         # Handle input validation errors
-        return {"error": str(e)}
+        return {"error": f"Input validation error: {e}"}
 
     except Exception as e:
         # Handle unexpected errors gracefully
-        return {"error": "An unexpected error occurred. Please check your inputs."}
-
-# Example Usage
-if __name__ == "__main__":
-    try:
-        A = np.array([[2, -1], [1, 3]])
-        b = np.array([1, 4])
-
-        result = cramers(A, b)
-        if "error" in result:
-            print(result["error"])
-        else:
-            print("Solutions:", result["solutions"])
-            print("Steps:", result["steps"])
-    except Exception as e:
-        print("An unexpected error occurred. Please contact support.")
+        return {"error": f"Unexpected computation error: {e}"}

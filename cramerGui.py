@@ -25,7 +25,7 @@ def cramers_app():
     st.write("Enter the constants vector (b):")
     b_input = st.text_input("b (use format a+bI for complex numbers):")
     if b_input.strip():  # Ensure the input isn't empty before parsing
-        b = np.array([complex(x.strip().replace("I", "j")) for x in b_input.split(",")], dtype=complex)
+        b = np.array([complex(x.strip().replace("i", "j")) for x in b_input.split(",")], dtype=complex)
     else:
         st.error("Constants vector (b) cannot be empty.")
         return

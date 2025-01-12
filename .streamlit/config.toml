@@ -3,4 +3,4 @@ primaryColor = "#00A1FF"  # Blue
 backgroundColor = "#FFFFFF"  # White
 secondaryBackgroundColor = "#F5F5F5"  # Light gray
 textColor = "#000000"  # Black
-font = "Serif"
+font = "serif"

@@ -43,7 +43,9 @@ def lu_decomposition(A, b):
     for i in range(n - 1, -1, -1):
         x[i] = (y[i] - sum(U[i, k] * x[k] for k in range(i + 1, n))) / U[i, i]
 
+
     return {"L": format_matrix(L), "U": format_matrix(U), "x": format_matrix([x])[0], "steps": steps, "y": format_matrix([y])[0]}
+
 
 def lu_app():
     st.header("LU Decomposition and Advanced Options")
@@ -65,6 +67,8 @@ def lu_app():
             except ValueError:
                 error_message = f"Invalid values in Row {i + 1}. Please enter numbers only."
                 break
+        else:
+            A.append([])  # Initialize with empty row if the field is empty
 
     if len(A) != int(size):  # Check if all rows are entered
         error_message = "Please enter all rows for matrix A."
@@ -79,6 +83,8 @@ def lu_app():
                 error_message = "The length of vector b must match the matrix size."
         except ValueError:
             error_message = "Invalid values in vector b. Please enter numbers only."
+    else:
+        b = []  # Initialize with empty list if the field is empty
 
     # If no errors, perform LU decomposition
     if not error_message and len(A) == int(size) and len(b) == int(size):
@@ -86,19 +92,19 @@ def lu_app():
         b = np.array(b)
         result = lu_decomposition(A, b)
         st.write("L Matrix:")
-        st.write(result["L"])
+        st.write(format_matrix(result["L"]))
         st.write("U Matrix:")
-        st.write(result["U"])
+        st.write(format_matrix(result["U"]))
         st.write("y Vector:")
-        st.write(result["y"])
+        st.write(format_matrix([result["y"]])[0])
         st.write("x Vector (Solution):")
-        st.write(result["x"])
+        st.write(format_matrix([result["x"]])[0])
         for step in result["steps"]:
             st.write(step["Step"])
             st.write("L:")
-            st.write(step["L"])
+            st.write(format_matrix(step["L"]))
             st.write("U:")
-            st.write(step["U"])
+            st.write(format_matrix(step["U"]))
     else:
         # Display error message under the relevant input field
         if error_message:

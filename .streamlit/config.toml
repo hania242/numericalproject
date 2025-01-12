@@ -1,0 +1,11 @@
+[global]
+showWarningOnDirectExecution = false
+
+[browser]
+gatherUsageStats = false
+
+[server]
+enableCORS = false
+
+[runner]
+cacheDir = "/tmp/streamlit_cache"

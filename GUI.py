@@ -58,27 +58,47 @@ def muller_app():
     # User inputs
     equation = st.text_input(
         "Enter the function f(x):",
+        placeholder="e.g., x**3 - 6*x + 8",
         help="Use 'x' for the variable and '**' for exponents. Example: x**3 - 6*x + 8",
     ).strip()
-    x0 = st.text_input("Enter the first initial guess (x0):").strip()
-    x1 = st.text_input("Enter the second initial guess (x1):").strip()
-    x2 = st.text_input("Enter the third initial guess (x2):").strip()
+    x0 = st.text_input(
+        "Enter the first initial guess (x0):",
+        placeholder="e.g., 1+2i for complex or 1 for real numbers"
+    ).strip()
+    x1 = st.text_input(
+        "Enter the second initial guess (x1):",
+        placeholder="e.g., 2+i for complex or 2 for real numbers"
+    ).strip()
+    x2 = st.text_input(
+        "Enter the third initial guess (x2):",
+        placeholder="e.g., 3+0i for complex or 3 for real numbers"
+    ).strip()
     max_iter = st.number_input("Maximum Iterations:", value=10, step=1)
     true_root = st.text_input(
         "Enter the true root (optional):",
+        placeholder="e.g., 2+0i for complex or 2 for real numbers",
         help="If known, enter the true root to calculate Et (%) for each iteration.",
     ).strip()
 
-    if st.button("Solve Step-by-Step"):
-        try:
-            # Validate inputs
-            if not equation:
-                st.error("Please enter a valid equation.")
-                return
-            if not x0 or not x1 or not x2:
-                st.error("Please enter valid initial guesses (x0, x1, x2).")
-                return
+    # Collect errors
+    errors = []
+    if not equation:
+        errors.append("Please enter a valid equation.")
+    if not x0:
+        errors.append("Please enter a valid initial guess for x0.")
+    if not x1:
+        errors.append("Please enter a valid initial guess for x1.")
+    if not x2:
+        errors.append("Please enter a valid initial guess for x2.")
 
+    if st.button("Solve Step-by-Step"):
+        # If there are errors, display them all
+        if errors:
+            for error in errors:
+                st.error(error)
+            return
+
+        try:
             # Clean and validate the equation
             f = lambda x: eval(equation.replace("^", "**"))  # Replace ^ with ** for exponentiation
             f(1)  # Test the equation with a sample value to validate correctness

@@ -12,11 +12,11 @@ def format_number(value):
     str: Formatted number as a string.
     """
     if np.iscomplex(value):  # Check if the number is complex
-        # If complex, display the real and imaginary parts with 'I' for imaginary
+        # If complex, display the real and imaginary parts with 'i' for imaginary
         if np.isclose(value.imag, 0):  # If imaginary part is close to zero, treat as real
             return f"{value.real:.3f}" if not value.real.is_integer() else f"{int(value.real)}"
         else:
-            return f"{value.real:.3f}{value.imag:+.3f}i" if not value.imag.is_integer() else f"{value.real}{value.imag:+.0f}I"
+            return f"{value.real:.3f}{value.imag:+.3f}i" if not value.imag.is_integer() else f"{value.real}{value.imag:+.0f}i"
     else:
         # If real, add decimal only if needed (i.e., avoid decimals for integers)
         return f"{value:.3f}" if not value.is_integer() else f"{int(value)}"
@@ -77,9 +77,13 @@ def cramers(A, b):
 
         return {"solutions": solutions, "steps": steps}
 
+    except ValueError as e:
+        # Handle input validation errors
+        return {"error": str(e)}
+
     except Exception as e:
-        # Return a user-friendly error message
-        return {"error": "An error occurred. Please check your inputs and try again."}
+        # Handle unexpected errors gracefully
+        return {"error": "An unexpected error occurred. Please check your inputs."}
 
 # Example Usage
 if __name__ == "__main__":

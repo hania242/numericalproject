@@ -19,11 +19,11 @@ def muller(f, x0, x1, x2, max_iter=10, true_root=None):
         def format_number(num):
             """
             Converts a complex number to formatted string with 3 decimal places.
-            Replaces `j` with `I` for complex numbers.
+            Replaces `j` with `i` for complex numbers.
             """
-            if np.isclose(num.imag, 0):
-                return f"{num.real:.3f}"  # Real number
-            return f"{num:.3f}".replace("j", "i")  # Complex number
+            if np.isclose(num.imag, 0):  # Check if it's approximately real
+                return f"{num.real:.3f}"  # Format real part
+            return f"{num:.3f}".replace("j", "i")  # Format complex number with small 'i'
 
         for i in range(max_iter):
             h0 = x1 - x0

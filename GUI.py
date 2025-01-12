@@ -1,50 +1,54 @@
 import streamlit as st
 from muller import muller
 
-# Custom CSS with more specific selectors
-st.markdown(
-    """
-    <style>
-    /* Style headers */
-    h1, .stMarkdown h1 {
-        color: #00A1FF!important;  /* Primary blue for main headers */
-    }
-    h2, .stMarkdown h2 {
-        color: #1E90FF; /* Slightly lighter blue for subheaders */
-    }
-    h3, .stMarkdown h3 {
-        color: #4682B4; /* Steel blue for smaller headers */
-    }
+# Inject Custom CSS
+def inject_custom_css():
+    st.markdown(
+        """
+        <style>
+        /* Style headers */
+        h1, .stMarkdown h1 {
+            color: #00A1FF!important;  /* Primary blue for main headers */
+        }
+        h2, .stMarkdown h2 {
+            color: #1E90FF; /* Slightly lighter blue for subheaders */
+        }
+        h3, .stMarkdown h3 {
+            color: #4682B4; /* Steel blue for smaller headers */
+        }
 
-    /* Style buttons with more specific selectors */
-    div.stButton > button {
-        background-color: #00A1FF;  /* Primary blue */
-        color: white;
-        border-radius: 8px;
-        font-size: 16px;
-        font-weight: bold;
-        border: none;
-        transition: 0.3s;
-    }
-    div.stButton > button:hover {
-        background-color: #007ACC; /* Darker blue on hover */
-    }
+        /* Style buttons */
+        div.stButton > button {
+            background-color: #00A1FF;  /* Primary blue */
+            color: white;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            transition: 0.3s;
+        }
+        div.stButton > button:hover {
+            background-color: #007ACC; /* Darker blue on hover */
+        }
 
-    /* Style text input fields */
-    input[type="text"], input[type="number"] {
-        border: 2px solid #00A1FF;
-        border-radius: 5px;
-        padding: 8px;
-        font-size: 14px;
-    }
-    input[type="text"]:focus, input[type="number"]:focus {
-        outline: none;
-        border: 2px solid #007ACC; /* Darker blue on focus */
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+        /* Style text input fields */
+        input[type="text"], input[type="number"] {
+            border: 2px solid #00A1FF;
+            border-radius: 5px;
+            padding: 8px;
+            font-size: 14px;
+        }
+        input[type="text"]:focus, input[type="number"]:focus {
+            outline: none;
+            border: 2px solid #007ACC; /* Darker blue on focus */
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+# Inject the CSS at the start of the app
+inject_custom_css()
 
 # Streamlit App
 def muller_app():

@@ -7,7 +7,7 @@ st.markdown(
     <style>
     /* Style headers */
     h1, .stMarkdown h1 {
-        color: #00A1FF;  /* Primary blue for main headers */
+        color: #00A1FF!important;  /* Primary blue for main headers */
     }
     h2, .stMarkdown h2 {
         color: #1E90FF; /* Slightly lighter blue for subheaders */

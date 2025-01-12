@@ -2,7 +2,6 @@ import streamlit as st
 import numpy as np
 from LUdecomposition import lu_decomposition
 
-
 def lu_app():
     st.header("LU Decomposition and Advanced Options")
     st.write("Decompose a matrix into Lower (L) and Upper (U) triangular matrices, and choose an operation.")
@@ -12,7 +11,7 @@ def lu_app():
     size = st.number_input("Matrix size (n x n):", min_value=2, max_value=10, value=3)
     A = []
     for i in range(int(size)):
-        row = st.text_input(f"Row {i + 1} of A (use commas to separate values):", value=", ".join(["1"] * int(size)))
+        row = st.text_input(f"Row {i + 1} of A (use commas to separate values):")
         A.append([float(x.strip()) for x in row.split(",")])
     A = np.array(A)
 
@@ -25,7 +24,7 @@ def lu_app():
     if operation == "Solve Ax = b":
         # Input constants vector b
         st.write("Enter the constants vector (b):")
-        b_input = st.text_input("Vector b (use commas to separate values):", value=", ".join(["1"] * int(size)))
+        b_input = st.text_input("Vector b (use commas to separate values):")
         b = np.array([float(x.strip()) for x in b_input.split(",")])
 
         if st.button("Decompose and Solve"):

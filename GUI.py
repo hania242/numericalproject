@@ -1,5 +1,6 @@
 import streamlit as st
 from muller import muller
+
 def inject_custom_css():
     st.markdown(
         """
@@ -57,31 +58,39 @@ def muller_app():
     # User inputs
     equation = st.text_input(
         "Enter the function f(x):",
-        value="x**3 - 6*x + 8",
         help="Use 'x' for the variable and '**' for exponents. Example: x**3 - 6*x + 8",
-    )
-    x0 = st.number_input("Enter the first initial guess (x0):", value=0.0)
-    x1 = st.number_input("Enter the second initial guess (x1):", value=1.0)
-    x2 = st.number_input("Enter the third initial guess (x2):", value=2.0)
+    ).strip()
+    x0 = st.text_input("Enter the first initial guess (x0):").strip()
+    x1 = st.text_input("Enter the second initial guess (x1):").strip()
+    x2 = st.text_input("Enter the third initial guess (x2):").strip()
     max_iter = st.number_input("Maximum Iterations:", value=10, step=1)
     true_root = st.text_input(
         "Enter the true root (optional):",
-        value="",
         help="If known, enter the true root to calculate Et (%) for each iteration.",
-    )
+    ).strip()
 
     if st.button("Solve Step-by-Step"):
         try:
+            # Validate inputs
+            if not equation:
+                st.error("Please enter a valid equation.")
+                return
+            if not x0 or not x1 or not x2:
+                st.error("Please enter valid initial guesses (x0, x1, x2).")
+                return
+
             # Clean and validate the equation
-            equation = equation.strip()  # Remove extra spaces
             f = lambda x: eval(equation.replace("^", "**"))  # Replace ^ with ** for exponentiation
             f(1)  # Test the equation with a sample value to validate correctness
 
-            # Parse true root if provided
-            true_root = complex(true_root) if true_root else None
+            # Parse inputs
+            x0 = complex(x0.replace("I", "j"))
+            x1 = complex(x1.replace("I", "j"))
+            x2 = complex(x2.replace("I", "j"))
+            true_root = complex(true_root.replace("I", "j")) if true_root else None
 
             # Solve using the Muller method
-            steps = muller(f, complex(x0), complex(x1), complex(x2), max_iter=max_iter, true_root=true_root)
+            steps = muller(f, x0, x1, x2, max_iter=max_iter, true_root=true_root)
 
             st.success("Calculation complete. See step-by-step results below.")
             st.write("### Step-by-Step Results:")
@@ -92,7 +101,7 @@ def muller_app():
         except SyntaxError:
             st.error("The equation syntax is incorrect. Please check your input.")
         except Exception as e:
-            st.error(f"Error: {e}")
+            st.error(f"An error occurred: {e}")
 
 if __name__ == "__main__":
     muller_app()

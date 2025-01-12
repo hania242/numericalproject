@@ -13,14 +13,22 @@ def cramers_app():
     st.write("Enter the coefficient matrix (A):")
     A = []
     for i in range(size):
-        row = st.text_input(f"Row {i+1} (use format a+bj for complex numbers):", value=", ".join(["1"] * size))
-        A.append([complex(x.strip()) for x in row.split(",")])
+        row = st.text_input(f"Row {i+1} (use format a+bI for complex numbers):")
+        if row.strip():  # Ensure the row isn't empty before parsing
+            A.append([complex(x.strip().replace("I", "j")) for x in row.split(",")])
+        else:
+            st.error(f"Row {i+1} cannot be empty.")
+            return
     A = np.array(A, dtype=complex)
 
     # Input constants vector
     st.write("Enter the constants vector (b):")
-    b_input = st.text_input("b (use format a+bj for complex numbers):", value=", ".join(["1"] * size))
-    b = np.array([complex(x.strip()) for x in b_input.split(",")], dtype=complex)
+    b_input = st.text_input("b (use format a+bI for complex numbers):")
+    if b_input.strip():  # Ensure the input isn't empty before parsing
+        b = np.array([complex(x.strip().replace("I", "j")) for x in b_input.split(",")], dtype=complex)
+    else:
+        st.error("Constants vector (b) cannot be empty.")
+        return
 
     if st.button("Solve"):
         try:
@@ -43,4 +51,7 @@ def cramers_app():
         except ValueError as e:
             st.error(f"Error: {e}")
         except Exception as e:
-            st.error(f"Unexpected error: {e}")
+            st.error("An unexpected error occurred. Please check your inputs.")
+
+if __name__ == "__main__":
+    cramers_app()

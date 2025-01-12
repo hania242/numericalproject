@@ -15,7 +15,7 @@ def cramers_app():
     for i in range(size):
         row = st.text_input(f"Row {i+1} (use format a+bI for complex numbers):")
         if row.strip():  # Ensure the row isn't empty before parsing
-            A.append([complex(x.strip().replace("I", "j")) for x in row.split(",")])
+            A.append([complex(x.strip().replace("I", "j")) for x in row.split(" ")])
         else:
             st.error(f"Row {i+1} cannot be empty.")
             return
@@ -25,7 +25,7 @@ def cramers_app():
     st.write("Enter the constants vector (b):")
     b_input = st.text_input("b (use format a+bI for complex numbers):")
     if b_input.strip():  # Ensure the input isn't empty before parsing
-        b = np.array([complex(x.strip().replace("i", "j")) for x in b_input.split(",")], dtype=complex)
+        b = np.array([complex(x.strip().replace("i", "j")) for x in b_input.split(" ")], dtype=complex)
     else:
         st.error("Constants vector (b) cannot be empty.")
         return

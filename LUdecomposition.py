@@ -63,7 +63,7 @@ def lu_app():
         row = st.text_input(f"Row {i + 1} of A (use commas to separate values):")
         if row:
             try:
-                A.append([float(x.strip()) for x in row.split(",")])
+                A.append([float(x.strip()) for x in row.split(" ")])
             except ValueError:
                 error_message = f"Invalid values in Row {i + 1}. Please enter numbers only."
                 break
@@ -78,7 +78,7 @@ def lu_app():
     b = []
     if b_input:
         try:
-            b = [float(x.strip()) for x in b_input.split(",")]
+            b = [float(x.strip()) for x in b_input.split(" ")]
             if len(b) != int(size):
                 error_message = "The length of vector b must match the matrix size."
         except ValueError:

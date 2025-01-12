@@ -84,10 +84,10 @@ def muller_app():
             f(1)  # Test the equation with a sample value to validate correctness
 
             # Parse inputs
-            x0 = complex(x0.replace("I", "j"))
-            x1 = complex(x1.replace("I", "j"))
-            x2 = complex(x2.replace("I", "j"))
-            true_root = complex(true_root.replace("I", "j")) if true_root else None
+            x0 = complex(x0.replace("i", "j"))
+            x1 = complex(x1.replace("i", "j"))
+            x2 = complex(x2.replace("i", "j"))
+            true_root = complex(true_root.replace("i", "j")) if true_root else None
 
             # Solve using the Muller method
             steps = muller(f, x0, x1, x2, max_iter=max_iter, true_root=true_root)

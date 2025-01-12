@@ -23,7 +23,7 @@ def muller(f, x0, x1, x2, max_iter=10, true_root=None):
             """
             if np.isclose(num.imag, 0):
                 return f"{num.real:.3f}"  # Real number
-            return f"{num:.3f}".replace("j", "I")  # Complex number
+            return f"{num:.3f}".replace("j", "i")  # Complex number
 
         for i in range(max_iter):
             h0 = x1 - x0
